@@ -4,6 +4,13 @@ from pathlib import Path
 from typing import Final, Match
 import regex_pattern
 
+"""
+Refactoring logic:
+1. Throw meaningful error messages + path and env_var validation
+2. Cleared up the repetitive logics
+3. More robust regex (Only allow 1 instance of the keyword) 
+"""
+
 # Constants 
 BASE_DIR: Final[Path] = Path(os.path.join(os.environ["SourcePath"],"develop","global","src"))
 SCONSTRUCT_PATH: Final[Path] = Path(os.path.join(BASE_DIR, "SConstruct")) 

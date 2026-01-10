@@ -38,13 +38,6 @@ def validation(path: Path):
     _validate_is_int(BUILD_NUM, "Environment Variable: BuildNum")
     _chmod_to_executable(path)
 
-# SCONSTRUCT file interesting lines
-# config.version = Version(
-# major=15,
-# minor=0,
-# point=6,
-# patch=0
-#) 
 def replace_in_file(path: Path, regex_pattern: re.Pattern[str], replacer_func):
     validation(path)
     file = path.read_text(encoding="utf-8")
@@ -52,7 +45,7 @@ def replace_in_file(path: Path, regex_pattern: re.Pattern[str], replacer_func):
     matches = regex_pattern.findall(file)
 
     if len(matches) != 1:
-        raise ValueError(f"Expected exactly 1 Version block, found {len(matches)}")
+        raise ValueError(f"Expected exactly 1 matches, found {len(matches)}")
 
     match_obj = regex_pattern.search(file)
     print(f"match_obj: {match_obj}")
@@ -67,6 +60,13 @@ def replace_in_file(path: Path, regex_pattern: re.Pattern[str], replacer_func):
         
     path.write_text(new_content, encoding="utf-8")
 
+# SCONSTRUCT file interesting lines
+# config.version = Version(
+# major=15,
+# minor=0,
+# point=6,
+# patch=0
+#)
 def replace_Sconstruct(match: Match[str]) -> str:
     return re.sub(
         regex_pattern.POINT_PATTERN,
@@ -85,9 +85,21 @@ def replace_version(match: Match[str]) -> str:
     )
 
 def updateSconstruct():
+    """
+    Assume there'll always be valid Version block. i.e.
+    Version(
+    major=int,
+    minor=int,
+    point=int,
+    patch=int
+    )
+    """
     replace_in_file(SCONSTRUCT_PATH, regex_pattern.RE_PATTERN_SCONSTRUCT_VERSION, replace_Sconstruct)
 
 def updateVersion():
+    """
+    Assume there'll always be the keyword ADLMSDK_VERSION_POINT=(int)
+    """
     replace_in_file(VERSION_PATH, regex_pattern.VERSION_FILE_POINT_PATTERN, replace_version)
 
 def main():

@@ -1,6 +1,6 @@
 def reverse_words(string: str) -> str:
     """
-    Returns the input string reversed alphanumerically, 
+    Returns the input string reversed alphanumerically,
     i.e. the symbols and spaces are unchanged, only the words are reversed
 
     Time/Space Complexity: O(n), where n is length of input string
@@ -12,7 +12,7 @@ def reverse_words(string: str) -> str:
     then perform the reversal from the `start` index.
     """
 
-    arr = list(string) # convert to array for efficient mutability
+    arr = list(string)  # convert to array for efficient mutability
     n = len(arr)
     i = 0
 
@@ -29,8 +29,8 @@ def reverse_words(string: str) -> str:
 
         arr[start:i] = arr[start:i][::-1]
 
-
     return "".join(arr)
+
 
 def main():
     test_str = "String; 2be reversed..."
@@ -44,6 +44,8 @@ def main():
     assert reverse_words("!@# $%^") == "!@# $%^"
     assert reverse_words("word!word?word.") == "drow!drow?drow."
     assert reverse_words("123 456 789") == "321 654 987"
+    assert reverse_words("!123 456!!") == "!321 654!!"
+
 
 if __name__ == "__main__":
     main()

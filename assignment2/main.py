@@ -55,9 +55,7 @@ def replace_in_file(path: Path, regex_pattern: re.Pattern[str], replacer_func):
         raise ValueError(f"Expected exactly 1 matches, found {len(matches)}")
 
     match_obj = regex_pattern.search(file)
-    print(f"match_obj: {match_obj}")
     new_block = replacer_func(match_obj)
-    print(new_block)
 
     new_content = (
         file[:match_obj.start(1)] +
@@ -111,6 +109,8 @@ def updateVersion():
 
 def main():
     updateSconstruct()
+    print(f"Sconstruct point updated to {BUILD_NUM}")
     updateVersion()
+    print(f"ADLMSDK version updated to {BUILD_NUM}")
 
 main()
